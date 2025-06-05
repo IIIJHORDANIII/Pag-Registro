@@ -5,11 +5,17 @@ export interface Image {
   value: number;
   imagePath: string;
   createdAt: string;
+  url?: string;
+  uploadedBy?: {
+    _id: string;
+    nome: string;
+    email: string;
+  };
 }
 
 export interface ImageFormData {
-  image: File | null;
   name: string;
   description: string;
   value: string;
+  image: File | null;
 }

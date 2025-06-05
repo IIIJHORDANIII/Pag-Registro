@@ -1,44 +1,66 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { Image } from '../types/image';
+import './ImageModal.css';
 
 interface ImageModalProps {
   show: boolean;
-  image: Image | null;
   onHide: () => void;
-  onDelete: (id: string) => void;
+  image: Image | null;
+  onDelete: () => void;
+  isDeleting: boolean;
 }
 
-const ImageModal: React.FC<ImageModalProps> = ({ show, image, onHide, onDelete }) => {
+const ImageModal: React.FC<ImageModalProps> = ({ show, onHide, image, onDelete, isDeleting }) => {
   if (!image) return null;
 
   return (
-    <Modal show={show} onHide={onHide} size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title>{image.name}</Modal.Title>
+    <Modal 
+      show={show} 
+      onHide={onHide} 
+      centered
+      className="image-modal"
+    >
+      <Modal.Header closeButton className="modal-header">
+        <Modal.Title>Confirmar Exclusão</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <div className="row">
-          <div className="col-md-6">
-            <img 
-              src={`${image.imagePath}`} 
-              alt={image.name}
-              className="img-fluid rounded"
-            />
-          </div>
-          <div className="col-md-6">
-            <p><strong>Descrição:</strong> {image.description || 'Sem descrição'}</p>
-            <p><strong>Valor:</strong> R$ {image.value.toFixed(2)}</p>
-            <p><strong>Data de Cadastro:</strong> {new Date(image.createdAt).toLocaleString()}</p>
-          </div>
+      <Modal.Body className="modal-body">
+        <div className="image-preview">
+          <img src={image.imagePath} alt={image.name} />
+        </div>
+        <div className="image-details">
+          <h4>{image.name}</h4>
+          <p className="price">R$ {image.value.toFixed(2)}</p>
+          <p className="description">{image.description}</p>
+        </div>
+        <div className="warning-message">
+          <i className="bi bi-exclamation-triangle"></i>
+          <p>Tem certeza que deseja excluir esta imagem? Esta ação não pode ser desfeita.</p>
         </div>
       </Modal.Body>
-      <Modal.Footer>
-        <Button variant="danger" onClick={() => onDelete(image._id)}>
-          Excluir
+      <Modal.Footer className="modal-footer">
+        <Button 
+          variant="secondary" 
+          onClick={onHide}
+          className="cancel-button"
+          disabled={isDeleting}
+        >
+          Cancelar
         </Button>
-        <Button variant="secondary" onClick={onHide}>
-          Fechar
+        <Button 
+          variant="danger" 
+          onClick={onDelete}
+          className="delete-button"
+          disabled={isDeleting}
+        >
+          {isDeleting ? (
+            <>
+              <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              Excluindo...
+            </>
+          ) : (
+            'Excluir'
+          )}
         </Button>
       </Modal.Footer>
     </Modal>

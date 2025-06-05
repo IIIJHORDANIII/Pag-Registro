@@ -1,0 +1,33 @@
+.image-list-container {
+  padding: 1rem 0;
+}
+
+.image-list-container .spinner-border {
+  width: 3rem;
+  height: 3rem;
+  color: #4a90e2;
+}
+
+.image-list-container .alert {
+  margin: 2rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.image-list-container .alert-danger {
+  background-color: #fff5f5;
+  border-color: #fed7d7;
+  color: #c53030;
+}
+
+.image-list-container .alert-info {
+  background-color: #ebf8ff;
+  border-color: #bee3f8;
+  color: #2b6cb0;
+}
+
+@media (max-width: 768px) {
+  .image-list-container {
+    padding: 0.5rem 0;
+  }
+} 
